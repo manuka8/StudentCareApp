@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "StudentCareApp",
-    "slug": "StudentCareApp",
+    "name": "StudentApp",
+    "slug": "StudentApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
