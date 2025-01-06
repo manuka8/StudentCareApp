@@ -2,12 +2,14 @@ import React from 'react';
 import { View, StyleSheet,Image } from 'react-native';
 import { Avatar,Card ,Divider,Text} from 'react-native-paper';
 import { students } from '../StudentDb';
+import { ScrollView } from 'react-native-web';
 const ProfileScreen = ({ route }) => {
     const { username } = route.params;
     const user = students.find(
         (student) => student.username === username 
       );
   return (
+    <ScrollView>
     <View style={styles.container}>
         <Card style={styles.card}>
             <Card.Content>
@@ -29,6 +31,7 @@ const ProfileScreen = ({ route }) => {
             </Card.Content>
         </Card>
     </View>
+    </ScrollView>
   );
 };
 
