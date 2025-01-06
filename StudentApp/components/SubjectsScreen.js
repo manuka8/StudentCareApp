@@ -1,72 +1,132 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
-import { Avatar, Card, Text } from "react-native-paper";
-import { students, courses } from "../StudentDb";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { Card, Text } from "react-native-paper";
+import { students, courses, subjects, marks } from "../StudentDb";
+
 const SubjectScreen = ({ route }) => {
   const { username } = route.params;
+
   const user = students.find((student) => student.username === username);
-  const course = courses.find((courses) => courses.id === user.course_id);
+
+  const course = courses.find((course) => course.id === user.course_id);
+
+  const filteredSubjects = subjects.filter(
+    (subject) => subject.course_id === course.id
+  );
+
+  const filteredMarks = marks.filter((mark) => mark.student_id === user.id);
+
+  const subjectWithMarks = filteredSubjects.map((subject) => {
+    const subjectMark = filteredMarks.find(
+      (mark) => mark.subject_id === subject.id
+    );
+    return {
+      ...subject,
+      marks: subjectMark ? subjectMark.marks : "N/A", 
+    };
+  });
+
+  const totalMarks = subjectWithMarks.reduce(
+    (sum, item) => (typeof item.marks === "number" ? sum + item.marks : sum),
+    0
+  );
+  const averageMarks =
+    subjectWithMarks.length > 0 ? totalMarks / subjectWithMarks.length : 0;
+
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Card style={styles.card}>
         <Card.Content>
           <Text variant="headlineLarge" style={styles.name}>
             {course.name}
           </Text>
           <Text style={styles.details}>
-            Code : {course.course_code} | Dept : {course.department}
+            {subjectWithMarks.length} Subjects | Average: {averageMarks.toFixed(2)}
           </Text>
 
-          <View style={styles.contactinfo}>
-            <Text style={styles.contactinfoheader}>Course Information</Text>
-            <Text>
-              Code : {course.course_code}
-              {"\n"}Department : {course.department}
-              {"\n"}Duration:{course.duration}
-              {"\n"}Description:{course.description}
-            </Text>
+          <View style={styles.table}>
+            <View style={[styles.row, styles.headerRow]}>
+              <Text style={[styles.cell, styles.headerCell]}>Subject Name</Text>
+              <Text style={[styles.cell, styles.headerCell]}>Marks</Text>
+            </View>
+            {subjectWithMarks.map((subject, index) => (
+              <View
+                key={subject.id}
+                style={[styles.row, index % 2 === 0 ? styles.evenRow : null]}
+              >
+                <Text style={styles.cell}>{subject.name}</Text>
+                <Text style={styles.cell}>{subject.marks}</Text>
+              </View>
+            ))}
           </View>
+
+          
         </Card.Content>
       </Card>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    width: "100%",
-    padding: 10, // Added padding to ensure no content is touching the edges
-  },
-  imagecontainer: {
-    alignItems: "center",
-    width: "80%",
-    height: 160,
-    marginBottom: 20, // Added margin to separate image from text content
+    padding: 10,
   },
   card: {
     width: "100%",
     alignItems: "center",
-    padding: 20, // Added padding for better content spacing inside the card
-    borderRadius: 10, // Optional: rounded corners for the card
-    backgroundColor: "#f9f9f9", // Light background color for the card
+    padding: 20,
+    borderRadius: 10,
+    backgroundColor: "#f9f9f9",
   },
   name: {
     fontSize: 30,
     textAlign: "center",
-    marginVertical: 10, // Added vertical margin for spacing between name and details
-    fontWeight: "bold", // Optional: makes the name text bold
+    marginVertical: 10,
+    fontWeight: "bold",
   },
   details: {
     textAlign: "center",
-    marginTop: 10, // Margin for spacing between name and other details
-    fontSize: 16, // Slightly smaller font size for details
-    color: "#555", // Soft grey color for details text
+    marginTop: 10,
+    fontSize: 16,
+    color: "#555",
+  },
+  table: {
+    marginTop: 20,
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+  row: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderColor: "#ddd",
+  },
+  headerRow: {
+    backgroundColor: "#f1f8ff",
+  },
+  evenRow: {
+    backgroundColor: "#f9f9f9",
+  },
+  cell: {
+    flex: 1,
+    padding: 10,
+    textAlign: "center",
+    fontSize: 16,
+  },
+  headerCell: {
+    fontWeight: "bold",
   },
   contactinfo: {
-    alignItems: "gight",
+    marginTop: 20,
+    width: "100%",
+  },
+  contactinfoheader: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
   },
 });
 
