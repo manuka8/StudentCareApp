@@ -1,114 +1,43 @@
-import * as React from 'react';
-import { View } from 'react-native';
-import { useTheme } from '@react-navigation/native';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, Pressable } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import ProfileScreen from './ProfileScreen';
-import SubjectScreen from './SubjectsScreen';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import CourseScreen from './CourseScreen';
-
-function MyTabBar({ state, descriptors, navigation }) {
-  const { colors } = useTheme();
-
-  const icons = {
-    Home: 'home',
-    Profile: 'person',
-    Settings: 'settings',
-  };
-
-  return (
-    <View style={{ flexDirection: 'row', backgroundColor: colors.card }}>
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
-
-        const isFocused = state.index === index;
-
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
-
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
-
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
-
-        return (
-          <Pressable
-            key={route.key}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              padding: 10,
-            }}
-          >
-    
-            <Icon
-              name={icons[route.name] || 'help-outline'} 
-              size={24}
-              color={isFocused ? colors.primary : colors.text}
-            />
-            <Text style={{ color: isFocused ? colors.primary : colors.text }}>
-              {label}
-            </Text>
-          </Pressable>
-        );
-      })}
-    </View>
-  );
-}
+import ProfileScreen from './ProfileScreen';
+import SubjectsScreen from './SubjectsScreen';
 
 const Tab = createBottomTabNavigator();
 
 export default function Footer({ username }) {
+  const screenOptions = ({ route }) => ({
+    tabBarIcon: ({ focused, color, size }) => {
+      const icons = {
+        Course: focused ? 'book' : 'book-outline',
+        Profile: focused ? 'person' : 'person-outline',
+        Subjects: focused ? 'list' : 'list-outline',
+      };
+
+      return <Ionicons name={icons[route.name]} size={size} color={color} />;
+    },
+    tabBarActiveTintColor: 'tomato',
+    tabBarInactiveTintColor: 'gray',
+  });
+
   return (
-    <Tab.Navigator
-      tabBar={(props) => <MyTabBar {...props} />}
-      screenOptions={{
-        headerShown: false, 
-      }}
-    >
+    <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
-        name="Home"
+        name="Course"
         component={CourseScreen}
-        initialParams={{ username }} 
-        options={{
-          tabBarLabel: 'Courses',
-        }}
+        initialParams={{ username }}
       />
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
-        initialParams={{ username }} 
-        options={{
-          tabBarLabel: 'Profile',
-        }}
+        initialParams={{ username }}
       />
       <Tab.Screen
-        name="Settings"
-        component={SubjectScreen}
-        initialParams={{ username }} 
-        options={{
-          tabBarLabel: 'Subjects',
-        }}
+        name="Subjects"
+        component={SubjectsScreen}
+        initialParams={{ username }}
       />
     </Tab.Navigator>
   );
