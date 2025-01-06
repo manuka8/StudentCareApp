@@ -18,13 +18,13 @@ const CourseScreen = ({ route }) => {
             Code : {course.course_code} | Dept : {course.department}
           </Text>
 
-          <View style={styles.contactinfo}>
-            <Text style={styles.contactinfoheader}>Course Information</Text>
+          <View style={styles.courseinfo}>
+            <Text style={styles.courseinfoheader}>Course Information</Text>
             <Text>
-              Code : {course.course_code}
-              {"\n"}Department : {course.department}
-              {"\n"}Duration:{course.duration}
-              {"\n"}Description:{course.description}
+              Code :              {course.course_code}
+              {"\n"}Department :  {course.department}
+              {"\n"}Duration:         {course.duration}
+              {"\n"}Description:    {course.description}
             </Text>
           </View>
         </Card.Content>
@@ -65,9 +65,16 @@ const styles = StyleSheet.create({
     fontSize: 16, 
     color: "#555", 
   },
-  contactinfo: {
-    alignItems: "gight",
-  },
+  courseinfo:{
+    alignItems:'right',
+    marginTop:15
+},
+courseinfoheader:{
+  fontWeight: 'bold',
+  fontSize:15,
+  marginBottom:15,
+  textAlign:'left'
+},
 });
 
 export default CourseScreen;
