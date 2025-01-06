@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet,Image } from 'react-native';
-import { Avatar,Card ,Text} from 'react-native-paper';
+import { Avatar,Card ,Divider,Text} from 'react-native-paper';
 import { students } from '../StudentDb';
 const ProfileScreen = ({ route }) => {
     const { username } = route.params;
@@ -16,15 +16,15 @@ const ProfileScreen = ({ route }) => {
                 </View>
                 <Text variant="headlineLarge" style={styles.name}>{user.name}</Text>
                 <Text style={styles.details}>Age : {user.age} | Gender : {user.gender}</Text>
-
+                <Divider/>
                 <View style={styles.contactinfo}>
                     <Text style={styles.contactinfoheader}>Contact Information</Text>
-                    <Text >Email : {user.email}{'\n'}Phone:{user.phone}{'\n'}Address:{user.address}</Text>
+                    <Text >Email        : {user.email}{'\n'}Phone      :{user.phone}{'\n'}Address   :{user.address}</Text>
                 </View>
 
                 <View style={styles.bioinfo}>
                     <Text style={styles.bioinfoheader}>Biological Information</Text>
-                    <Text >Gender : {user.gender}{'\n'}Age : {user.age}{'\n'}blood Group:{user.blood_group}</Text>
+                    <Text >Gender           : {user.gender}{'\n'}Age                 : {user.age}{'\n'}blood Group  : {user.blood_group}</Text>
                 </View>
             </Card.Content>
         </Card>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     card: {
       width: '100%',
       alignItems: 'center',
-      padding: 20, 
+      padding: 10, 
       borderRadius: 10, 
       backgroundColor: '#f9f9f9',
     },
@@ -61,12 +61,30 @@ const styles = StyleSheet.create({
     },
     details: {
       textAlign: 'center',
-      marginTop: 10, 
+      marginTop: 5,
+      marginBottom:15, 
       fontSize: 16,
       color: '#555', 
     },
     contactinfo:{
-        alignItems:'gight'
+        alignItems:'right',
+        marginTop:15
+    },
+    contactinfoheader:{
+      fontWeight: 'bold',
+      fontSize:15,
+      marginBottom:15,
+      textAlign:'left'
+    },
+    bioinfo:{
+      alignItems:'right',
+      marginTop:15
+    },
+    bioinfoheader:{
+      fontWeight: 'bold',
+      fontSize:15,
+      marginBottom:10,
+      textAlign:'left'
     }
   });
   
