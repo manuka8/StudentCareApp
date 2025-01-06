@@ -25,15 +25,16 @@ export default function Footer({ username }) {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
-        name="Course"
-        component={CourseScreen}
-        initialParams={{ username }}
-      />
-      <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         initialParams={{ username }}
       />
+      <Tab.Screen
+        name="Course"
+        component={CourseScreen}
+        initialParams={{ username }}
+      />
+      
       <Tab.Screen
         name="Subjects"
         component={SubjectsScreen}
