@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Image } from "react-native";
-import { Avatar, Card, Text } from "react-native-paper";
+import { Avatar, Card, Divider, Text } from "react-native-paper";
 import { students, courses } from "../StudentDb";
 const CourseScreen = ({ route }) => {
   const { username } = route.params;
@@ -17,7 +17,7 @@ const CourseScreen = ({ route }) => {
           <Text style={styles.details}>
             Code : {course.course_code} | Dept : {course.department}
           </Text>
-
+          <Divider/>
           <View style={styles.courseinfo}>
             <Text style={styles.courseinfoheader}>Course Information</Text>
             <Text>
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     marginTop: 10, 
     fontSize: 16, 
     color: "#555", 
+    marginBottom:10
   },
   courseinfo:{
     alignItems:'right',
