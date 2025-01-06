@@ -4,18 +4,17 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const Profile = ({ route }) => {
-    const { userId, username } = route.params;
+    const { username } = route.params;
   return (
     <View style={styles.container}>
       <Header/>
       <View style={styles.logocontainer}>
         <Image source={require('../assets/logo.png')} style={styles.logo} />
-        <Text>{userId}{username}</Text>
       </View>
       <View>
       
     </View>
-      <Footer/>
+      <Footer username={username}/>
     </View>
   );
 };
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
   },
   logocontainer: {
     width: '90%',
-    height: 200,
+    height: 120,
     alignSelf: 'center',
     backgroundColor: 'white',
     overflow: 'hidden',
