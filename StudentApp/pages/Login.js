@@ -10,14 +10,21 @@ const Login = ({ navigation }) => {
 
   const handleLogin = () => {
     
-    for (let i = 0; i < students.length; i++) {
-      if (username === students[i].username && password === students[i].password) {
-        alert('Logging Succesfully');
-        navigation.navigate('Profile');
-        return;
-      }
+    if (!students || students.length === 0) {
+      alert('No student data available!');
+      return;
     }
-    alert('Invalid username or password');
+  
+    const user = students.find(
+      (student) => student.username === username && student.password === password
+    );
+  
+    if (user) {
+      alert('Login Successful');
+      navigation.navigate('Profile', { username: user.username });
+    } else {
+      alert('Invalid username or password');
+    }
   };
 
   return (
