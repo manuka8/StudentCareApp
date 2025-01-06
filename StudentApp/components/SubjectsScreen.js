@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { Card, Text } from "react-native-paper";
+import { Card, Divider, Text } from "react-native-paper";
 import { students, courses, subjects, marks } from "../StudentDb";
 
 const SubjectScreen = ({ route }) => {
@@ -40,10 +40,15 @@ const SubjectScreen = ({ route }) => {
           <Text variant="headlineLarge" style={styles.name}>
             {course.name}
           </Text>
+
+          
           <Text style={styles.details}>
             {subjectWithMarks.length} Subjects | Average: {averageMarks.toFixed(2)}
           </Text>
-
+          <Divider/>
+          <Text style={styles.header}>
+            Marks Information
+          </Text>
           <View style={styles.table}>
             <View style={[styles.row, styles.headerRow]}>
               <Text style={[styles.cell, styles.headerCell]}>Subject Name</Text>
@@ -92,11 +97,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     color: "#555",
+    marginBottom:15
   },
   table: {
     marginTop: 20,
     width: "100%",
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: "#ddd",
   },
   row: {
@@ -119,15 +125,14 @@ const styles = StyleSheet.create({
   headerCell: {
     fontWeight: "bold",
   },
-  contactinfo: {
-    marginTop: 20,
-    width: "100%",
-  },
-  contactinfoheader: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
+
+  header:{
+    fontWeight: 'bold',
+    fontSize:15,
+    marginTop:15,
+    marginBottom:15,
+    textAlign:'left'
+  }
 });
 
 export default SubjectScreen;
